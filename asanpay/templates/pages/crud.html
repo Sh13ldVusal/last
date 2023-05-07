@@ -12,30 +12,48 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
-<h1>Unique IP addresses count: <span id="ip-count"></span></h1>
+
+<h1> Users Count: <span id="active-users-count"></span></h1>
 
 <script>
-    function updateIPCount() {
+    function updateActiveUsersCount() {
         $.ajax({
-            url: '{% url "unique_ip_count" %}',
+            url: '{% url "active_users_count" "index" %}',  // Replace 'page_name' with the name of the desired page
             type: 'GET',
             dataType: 'json',
             success: function (data) {
-                // Replace the following line
-                // $('#ip-count').text(data.count);
-                // With this line
-                document.getElementById('ip-count').innerText = data.count;
+                // Update the HTML element with the active user count
+                document.getElementById('active-users-count').innerText = data.count;
             }
         });
     }
 
-    // Update the IP count every 5 seconds
-    setInterval(updateIPCount, 5000);
+    // Update the active user count every 5 seconds
+    setInterval(updateActiveUsersCount, 5000);
 
-    // Update the IP count immediately on page load
-    updateIPCount();
+    // Update the active user count immediately on page load
+    updateActiveUsersCount();
 </script>
-
+<button id="delete-all-btn">Delete All</button>
+<script>
+    document.getElementById('delete-all-btn').addEventListener('click', function() {
+        $.ajax({
+            url: '{% url "delete_all_contacts" %}',
+            type: 'POST',
+            dataType: 'json',
+            success: function(data) {
+                if (data.status === 'success') {
+                    // Refresh the contact list after successful deletion
+                    getContactList();
+                }
+            },
+            error: function() {
+                console.error('Error deleting all contacts.');
+            }
+        });
+    });
+    
+</script>
 <body>
     {% block content %}
         <div class="container">

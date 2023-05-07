@@ -24,6 +24,8 @@ function loadContacts() {
   
         data.contacts.forEach(function (contact) {
           let row = `
+          messages = Message.objects.all().order_by('-created_at')
+          
             <tr>
               <td>${contact.id}</td>
               <td>${contact.ip}</td>

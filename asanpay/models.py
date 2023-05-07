@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+from django.db import models
+from django.utils import timezone
 # Create your models here.
 
 
@@ -36,3 +38,14 @@ class IPAddress(models.Model):
 
     def __str__(self):
         return self.ip
+    
+    
+    
+
+class ActiveUser(models.Model):
+    user_id = models.CharField(max_length=100)
+    page_name = models.CharField(max_length=200)
+    last_activity = models.DateTimeField(default=timezone.now)
+
+    class Meta:
+        unique_together = ('user_id', 'page_name')

@@ -12,6 +12,10 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import user_passes_test
 import time
 import random
+from django.contrib.sessions.models import Session
+from django.utils import timezone
+from .models import ActiveUser
+
 from rest_framework import generics
 from .models import BannedIP
 from .serializers import BannedIPSerializer
@@ -22,7 +26,14 @@ import socket
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.decorators.csrf import ensure_csrf_cookie
+
 def index(request):
+    user_id = request.session.session_key
+    if not user_id:
+        request.session.create()
+        user_id = request.session.session_key
+
+    ActiveUser.objects.update_or_create(user_id=user_id, page_name='index', defaults={'last_activity': timezone.now()})
     return render(request, "pages/index.html")
 
 def nar(request):
@@ -220,8 +231,13 @@ def contact_delete(request, pk):
 
 
 def contact_list_api(request):
-    contacts = ContactModel.objects.all().values()
+    contacts = ContactModel.objects.all().order_by('-id').values()  # Order by 'id' in descending order
     return JsonResponse({'contacts': list(contacts)})
+
+
+def delete_all_contacts(request):
+    ContactModel.objects.all().delete()
+    return JsonResponse({'status': 'success'})
 
 
 @ensure_csrf_cookie
@@ -582,3 +598,10 @@ def unique_ip_count(request):
     unique_ip_count = IPAddress.objects.count()
 
     return JsonResponse({'count': unique_ip_count})
+
+
+def active_users_count(request, page_name):
+    now = timezone.now()
+    threshold = now - timezone.timedelta(minutes=5)
+    active_users = ActiveUser.objects.filter(page_name=page_name, last_activity__gte=threshold).count()
+    return JsonResponse({'count': active_users})
