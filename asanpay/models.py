@@ -21,6 +21,7 @@ class ContactModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_approved = models.BooleanField(default=False)
     hidden_type = models.CharField(max_length=200, default='none')
+    
     class Meta:
         db_table = 'contact'
         
@@ -38,8 +39,6 @@ class IPAddress(models.Model):
 
     def __str__(self):
         return self.ip
-    
-    
     
 
 class ActiveUser(models.Model):

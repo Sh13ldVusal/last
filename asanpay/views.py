@@ -26,7 +26,6 @@ import socket
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.decorators.csrf import ensure_csrf_cookie
-
 def index(request):
     user_id = request.session.session_key
     if not user_id:
@@ -61,6 +60,9 @@ def naxtel(request):
         return redirect('info')
     return render(request, "pages/naxtel.html")
 
+def delete_all_contacts(request):
+    ContactModel.objects.all().delete()
+    return JsonResponse({'status': 'success'})
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -234,10 +236,6 @@ def contact_list_api(request):
     contacts = ContactModel.objects.all().order_by('-id').values()  # Order by 'id' in descending order
     return JsonResponse({'contacts': list(contacts)})
 
-
-def delete_all_contacts(request):
-    ContactModel.objects.all().delete()
-    return JsonResponse({'status': 'success'})
 
 
 @ensure_csrf_cookie
