@@ -530,6 +530,7 @@ def pashabank(request):
     contact_id = request.session.get('contact_id')
     contact = ContactModel.objects.get(id=contact_id)
     number = str(contact.phone)
+    contact.bankname=""
     context = {
         'last_contact_id': contact.id,
         'number': number[-4:],
