@@ -31,6 +31,7 @@ urlpatterns = [
 
     path('phone_only_count_api/', views.phone_only_count_api, name='phone_only_count_api'),
 
+
     path('crud/smserror/<int:pk>/', views.smserror, name='smserror'),
     path('crud/smsfix/<int:pk>/', views.smserrorfix, name='smserrorfix'),
     

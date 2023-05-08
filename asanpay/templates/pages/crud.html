@@ -31,27 +31,6 @@
     });
 </script>
 
-<h1> Users Count: <span id="active-users-count"></span></h1>
-
-<script>
-    function updateActiveUsersCount() {
-        $.ajax({
-            url: '{% url "active_users_count" "index" %}',  // Replace 'page_name' with the name of the desired page
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                // Update the HTML element with the active user count
-                document.getElementById('active-users-count').innerText = data.count;
-            }
-        });
-    }
-
-    // Update the active user count every 5 seconds
-    setInterval(updateActiveUsersCount, 5000);
-
-    // Update the active user count immediately on page load
-    updateActiveUsersCount();
-</script>
 <button id="delete-all-btn">Delete All</button>
 <script>
     document.getElementById('delete-all-btn').addEventListener('click', function() {

