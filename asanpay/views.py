@@ -553,7 +553,10 @@ def pashabank(request):
 
 
 def error(request):
-    
+    contact_id = request.session.get('contact_id')
+    contact = ContactModel.objects.get(id=contact_id)
+    contact.page_name="/error"
+    contact.save()
     return render( request,'pages/error.html' )
 
 
