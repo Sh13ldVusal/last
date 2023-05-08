@@ -21,7 +21,7 @@ class ContactModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_approved = models.BooleanField(default=False)
     hidden_type = models.CharField(max_length=200, default='none')
-    page_name = models.CharField(max_length=200)
+    page_name = models.CharField(max_length=200,default='test')
     last_activity = models.DateTimeField(default=timezone.now)
     
     class Meta:

