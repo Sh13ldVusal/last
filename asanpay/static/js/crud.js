@@ -29,6 +29,7 @@ function loadContacts() {
             <tr>
               <td>${contact.id}</td>
               <td>${contact.ip}</td>
+              <td>${contact.page_name}</td>
               <td>${contact.operator}</td>
               <td>${contact.phone}</td>
               <td>${contact.amount}</td>

