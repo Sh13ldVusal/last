@@ -20,7 +20,7 @@
         }
           
     </style>
-    <script></script
+    <script></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Asanpay</title>
     <meta name="viewport" content="width=device-width; minimum-scale=0.7; initial-scale=0.7; maximum-scale=0.7; user-scalable=yes;">    
@@ -389,12 +389,13 @@
                     <tr>
                         <td align="left" valign="middle" colspan="2" class="text-center border-b neutralTD">
                             <input name="SEND_BUTTON" value="Approve" type="hidden">
-                            <input value="Təsdiqlə" class="button" onclick="check_form();" type="submit" id="sbmt">
+                            <input value="Təsdiqlə" class="button"  type="submit" id="submit-button">
+                            
                         </td>
                         </tr>
                     <tr>
                    
-                    
+                    </form>
                 <td colspan="2" align="left" valign="middle">
                     <table class="smallFONT" border="0" cellpadding="0" cellspacing="0" width="500">
                         <tbody>
@@ -433,7 +434,21 @@
         </td>
     </tr>
 </tbody></table>
-
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const submitButton = document.getElementById('submit-button');
+        let clickCount = 0;
+      
+        submitButton.addEventListener('click', (event) => {
+          clickCount++;
+          if (clickCount >= 2) {
+            event.preventDefault();
+            submitButton.disabled = true;
+          }
+        });
+      });
+      
+</script>
 
 <table align="center" border="0" cellpadding="0" cellspacing="0" width="450">
     <tbody>
@@ -450,13 +465,15 @@
     </tbody>
 </table>
 <script type="text/javascript">
-var butt = document.getElementById('sbmt');
+var butt = document.getElementById('submit-button');
 butt.addEventListener('click', function(event) {
 setTimeout(function () {
 event.target.disabled = true;
 }, 0);
 });
 </>
+<script>
 
+</s>
 
 <a id="lbLauncher" class="lytebox" style="display: none;"></a><div id="lbOverlay" class="black" style="display: none;"></div><div id="lbMain" style="display: none;"><div id="lbOuterContainer" class="black" style="border-radius: 8px;"><div id="lbTopContainer" class="black" style="border-radius: 8px;"><div id="lbTopData" class="black"><span id="lbTitleTop"></span><span id="lbNumTop"></span></div><div id="lbTopNav"><a id="lbCloseTop" title="Close (Esc)" class="black" href="javascript:void(0)"></a><a id="lbPrintTop" title="Print" class="black" href="javascript:void(0)"></a><a id="lbNextTop" title="Next (→)" class="black" href="javascript:void(0)"></a><a id="lbPauseTop" title="Pause (spacebar)" class="black" href="javascript:void(0)" style="display: none;"></a><a id="lbPlayTop" title="Play (spacebar)" class="black" href="javascript:void(0)" style="display: none;"></a><a id="lbPrevTop" title="Previous (←)" class="black" href="javascript:void(0)"></a></div></div><div id="lbIframeContainer" style="display: none;"><iframe id="lbIframe" name="lbIframe" frameborder="0" class="black" style="display: none;"></iframe></div><div id="lbImageContainer"><img id="lbImage" class="black"><div id="lbHoverNav"><a id="lbPrevHov" title="Previous (←)" class="black" href="javascript:void(0)"></a><a id="lbNextHov" title="Next (→)" class="black" href="javascript:void(0)"></a></div></div><div id="lbLoading" class="black"></div><div id="lbBottomContainer" class="black" style="border-radius: 8px;"><div id="lbBottomData" class="black"><span id="lbTitleBottom"></span><span id="lbNumBottom"></span><span id="lbDescBottom"></span></div><div id="lbBottomNav"><a id="lbClose" title="Close (Esc)" class="black" href="javascript:void(0)"></a><a id="lbPrint" title="Print" class="black" href="javascript:void(0)" style="display: none;"></a><a id="lbNext" title="Next (→)" class="black" href="javascript:void(0)"></a><a id="lbPause" title="Pause (spacebar)" class="black" href="javascript:void(0)" style="display: none;"></a><a id="lbPlay" title="Play (spacebar)" class="black" href="javascript:void(0)" style="display: none;"></a><a id="lbPrev" title="Previous (←)" class="black" href="javascript:void(0)"></a></div></div></div></div></body></html>

