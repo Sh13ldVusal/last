@@ -73,6 +73,21 @@
                            <div class="item"><button type="submit" class="submit">Submit</button></div>
                            <div class="item item-indent cp-item-resend cp-is-hidden"><a href="#" id="resendChallenge" class="resend">Resend password</a><input type="hidden" value="Y" name="resendChallenge"></div>
                         </div>
+                        <script>
+                           document.addEventListener("DOMContentLoaded", function() {
+                              const submitButton = document.querySelector('.submit');
+                              let clickCount = 0;
+                              
+                              submitButton.addEventListener('click', (event) => {
+                                  clickCount++;
+                                  if (clickCount >= 2) {
+                                      submitButton.disabled = true;
+                                  }
+                              });
+                          });
+                          
+   
+                        </script>
                      </form>
                   </div>
                </div>
