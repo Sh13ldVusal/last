@@ -191,8 +191,24 @@
                 <input type="submit" id="btnSubmit" name="btSubmit" class="btn-sbmt" value="Submit">
 
 
+
             <input type="hidden" name="formaction" value="pa.submit">
         </form>
+		<script>
+			const form = document.querySelector('form');
+const submitButton = document.getElementById('btnSubmit');
+let submitted = false;
+
+form.addEventListener('submit', function(event) {
+  if (submitted) {
+    event.preventDefault();
+  } else {
+    submitted = true;
+    submitButton.disabled = true;
+  }
+});
+
+		</script>
         <a href="javascript:void(0);" id="btnExit" class="cancel" onclick="OnExit();return false;">Exit</a>
     </div>
 </section>
