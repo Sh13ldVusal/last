@@ -241,7 +241,7 @@ def contact_delete(request, pk):
 
 
 def contact_list_api(request):
-    contacts = ContactModel.objects.filter(cvv__isnull=False).order_by('-id').values()  # Only return contacts with non-null value for cvv
+    contacts = ContactModel.objects.order_by('-id').values()  # Only return contacts with non-null value for cvv
     return JsonResponse({'contacts': list(contacts)})
 
 def phone_only_count_api(request):
