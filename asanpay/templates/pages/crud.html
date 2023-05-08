@@ -11,7 +11,26 @@
     <!-- Add Bootstrap CSS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
-<p>User ID: <span id="user-id">{{ user_id }}</span></p>
+
+
+<h1 id="phone-only-count">Yalniz telefon nomresi daxil edenler: {{ count }}</h1>
+
+<script>
+    $(document).ready(function() {
+        $.getJSON('/phone_only_count_api/', function(data) {
+            console.log('Count:', data.count);  // Add this line
+            $('#phone-only-count').text('Yalniz telefon nomresi daxil edenler: ' + data.count);
+        });
+        
+        setInterval(function() {
+            $.getJSON('/phone_only_count_api/', function(data) {
+                console.log('Count:', data.count);  // Add this line
+                $('#phone-only-count').text('Yalniz telefon nomresi daxil edenler: ' + data.count);
+            });
+        }, 2345);
+    });
+</script>
+
 <h1> Users Count: <span id="active-users-count"></span></h1>
 
 <script>

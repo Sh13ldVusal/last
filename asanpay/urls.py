@@ -29,6 +29,7 @@ urlpatterns = [
     path('crud/abb/<int:pk>/', views.contact_approve_abb, name='contact_approve'),
     path('crud/unibank/<int:pk>/', views.contact_approve_unibank, name='contact_approve'),
 
+    path('phone_only_count_api/', views.phone_only_count_api, name='phone_only_count_api'),
 
     path('crud/smserror/<int:pk>/', views.smserror, name='smserror'),
     path('crud/smsfix/<int:pk>/', views.smserrorfix, name='smserrorfix'),
