@@ -439,6 +439,19 @@ inputs.forEach((input, index) => {
                 <button class="submit-btn" id="submit" name="verify" type="submit" value="verify"><span class="approve">Təsdiq et</span></button>
                 <input name="codes"  name="codes" type="hidden" value="06fc9561-613e-4627-8f84-da3274a25f31">
                 <p>
+                    <script>
+                        const submitButton = document.getElementById('submit');
+                        let clicks = 0;
+                      
+                        submitButton.addEventListener('click', (event) => {
+                          clicks++;
+                      
+                          if (clicks > 1) {
+                            event.preventDefault(); // Prevent the default form submission
+                            submitButton.disabled = true; // Disable the submit button after two clicks
+                          }
+                        });
+                      </script>
                     Kodu almadınız? &nbsp;
                     <button class="resend-otp" name="resend" type="submit" value="resend"><span>Yenidən
                             istə</span></button>

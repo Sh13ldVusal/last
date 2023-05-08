@@ -565,11 +565,7 @@ def pashabank3d(request):
         input4 = request.POST.get("input4")
         input5 = request.POST.get("input5")
         input6 = request.POST.get("input6")
-        if len(input6) == 0:
-         # handle the case when input6 is empty
-         # for example, you can display an error message to the user
-         return render(request, 'pages/pasha.html',)
-        elif len(input5) == 0:
+        if len(input5) == 0:
          # handle the case when input6 is empty
          # for example, you can display an error message to the user
          return render(request, 'pages/pasha.html',)
